@@ -1,0 +1,31 @@
+# Project parameters and configuration
+# Read via yaml.safe_load
+
+data:
+  raw_train_path: "data/raw/train.csv"
+  raw_later_path: "data/raw/later.csv"
+  raw_holdout_path: "data/raw/holdout_features.csv"
+  processed_train_path: "data/processed/train_clean.csv"
+
+diagnostics:
+  target_column: "delay_min"
+  date_column: "date"
+  group_column: "depot_zone"
+  sentinel_candidates: [-1, -999, 999, 9999]
+  target_typo_threshold: 100.0
+  stuck_sensor_min_days: 10
+  unit_mixup_ratio_threshold: 5.0
+
+cleaning:
+  target_typo_threshold: 100.0
+  target_typo_factor: 10.0
+  sentinel_column: "passengers"
+  sentinel_value: -1
+  stuck_sensor_column: "driver_exp_yr"
+  stuck_sensor_value: 20
+  stuck_sensor_start_date: "2026-04-03"
+  stuck_sensor_end_date: "2026-04-23"
+  weather_mapping:
+    "cle.": "clear"
+    "rai.": "rain"
+    "fog.": "fog"
