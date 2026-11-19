@@ -1,0 +1,9 @@
+stages:
+  clean:
+    cmd: python src/data/clean.py
+    deps:
+      - data/raw/train.csv
+      - src/data/clean.py
+      - params.yaml
+    outs:
+      - data/processed/train_clean.csv
