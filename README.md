@@ -11,9 +11,9 @@
 
 | Enrolment No. | Name | Role |
 |---|---|---|
-| **S24CSEU2385** | Pulkit Chahar | Data Lead |
+| **S24CSEU2705** | Samanyu Khanna | Data Lead |
 | **S24CSEU1012** | Aaditya Suri | Model Lead |
-| **S24CSEU2705** | Samanyu Khanna | Service Lead |
+| **S24CSEU2385** | Pulkit Chahar | Service Lead |
 | **S24CSEU2378** | Vishal Yadav | Ops Lead |
 
 ---
