@@ -1,0 +1,21 @@
+# Core dependencies for MP280 (MLOps)
+# All versions pinned as required by Student Handbook Section 5 & 11
+
+pandas==2.2.3
+numpy==2.2.0
+scikit-learn==1.6.0
+joblib==1.4.2
+pyyaml==6.0.2
+
+# Tracking & Versioning
+mlflow==2.19.0
+dvc==3.58.0
+
+# API Service
+fastapi==0.115.6
+uvicorn==0.34.0
+pydantic==2.10.4
+
+# Testing & Client
+pytest==8.3.4
+httpx==0.28.1
