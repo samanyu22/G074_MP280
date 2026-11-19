@@ -1,6 +1,8 @@
 # Project parameters and configuration
 # Read via yaml.safe_load
 
+data_sha256: "933b8dec38fd496ba2963200a951e96a9e41ab6c67e5c99bce8a1c4abbdbcf11"
+
 data:
   raw_train_path: "data/raw/train.csv"
   raw_later_path: "data/raw/later.csv"

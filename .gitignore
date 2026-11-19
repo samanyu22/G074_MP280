@@ -1,1 +1,28 @@
-data/processed/train_clean.csv
+# Data artifacts
+data/processed/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Pytest
+.pytest_cache/
+.coverage
+
+# MLflow local runs (handbook section 8: tool reads mlflow.db, mlruns/mlartifacts can be ignored)
+mlruns/
+mlartifacts/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

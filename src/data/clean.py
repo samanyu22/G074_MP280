@@ -115,28 +115,24 @@ def handle_stuck_sensor(
     return df
 
 
-def clean_train_data(params_path: str = "params.yaml") -> pd.DataFrame:
-    """Execute complete data cleaning pipeline and save processed dataset."""
-    params = load_params(params_path)
-    data_cfg = params.get("data", {})
+def clean_dataframe(
+    df: pd.DataFrame, params: Optional[Dict[str, Any]] = None
+) -> pd.DataFrame:
+    """Apply all cleaning transformations to an in-memory DataFrame."""
+    if params is None:
+        try:
+            params = load_params()
+        except Exception:
+            params = {}
+
     clean_cfg = params.get("cleaning", {})
+    diag_cfg = params.get("diagnostics", {})
 
-    raw_path = Path(data_cfg.get("raw_train_path", "data/raw/train.csv"))
-    if not raw_path.exists():
-        raw_path = Path("data/train.csv")
-
-    output_path = Path(data_cfg.get("processed_train_path", "data/processed/train_clean.csv"))
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    print(f"Loading raw data from: {raw_path}")
-    df = pd.read_csv(raw_path)
-
-    # Apply cleaning steps in order
     df_clean = drop_duplicates(df)
 
     df_clean = fix_target_typos(
         df_clean,
-        target_col=params.get("diagnostics", {}).get("target_column", "delay_min"),
+        target_col=diag_cfg.get("target_column", "delay_min"),
         threshold=clean_cfg.get("target_typo_threshold", 100.0),
         factor=clean_cfg.get("target_typo_factor", 10.0),
     )
@@ -144,7 +140,7 @@ def clean_train_data(params_path: str = "params.yaml") -> pd.DataFrame:
     df_clean = normalize_categories(
         df_clean,
         column="weather",
-        mapping=clean_cfg.get("weather_mapping"),
+        mapping=clean_cfg.get("weather_mapping", {"cle.": "clear", "rai.": "rain", "fog.": "fog"}),
     )
 
     df_clean = handle_sentinels(
@@ -159,8 +155,28 @@ def clean_train_data(params_path: str = "params.yaml") -> pd.DataFrame:
         stuck_value=clean_cfg.get("stuck_sensor_value", 20),
         start_date=clean_cfg.get("stuck_sensor_start_date", "2026-04-03"),
         end_date=clean_cfg.get("stuck_sensor_end_date", "2026-04-23"),
-        date_col=params.get("diagnostics", {}).get("date_column", "date"),
+        date_col=diag_cfg.get("date_column", "date"),
     )
+
+    return df_clean
+
+
+def clean_train_data(params_path: str = "params.yaml") -> pd.DataFrame:
+    """Execute complete data cleaning pipeline and save processed dataset."""
+    params = load_params(params_path)
+    data_cfg = params.get("data", {})
+
+    raw_path = Path(data_cfg.get("raw_train_path", "data/raw/train.csv"))
+    if not raw_path.exists():
+        raw_path = Path("data/train.csv")
+
+    output_path = Path(data_cfg.get("processed_train_path", "data/processed/train_clean.csv"))
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    print(f"Loading raw data from: {raw_path}")
+    df = pd.read_csv(raw_path)
+
+    df_clean = clean_dataframe(df, params=params)
 
     # Save cleaned data
     df_clean.to_csv(output_path, index=False)
