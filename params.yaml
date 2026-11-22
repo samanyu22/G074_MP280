@@ -1,5 +1,4 @@
-# Project parameters and configuration
-# Read via yaml.safe_load
+# Project parameters and configuration. Load this file with yaml.safe_load.
 
 data_sha256: "933b8dec38fd496ba2963200a951e96a9e41ab6c67e5c99bce8a1c4abbdbcf11"
 
@@ -31,3 +30,11 @@ cleaning:
     "cle.": "clear"
     "rai.": "rain"
     "fog.": "fog"
+
+training:
+  validation_fraction: 0.20
+  random_state: 42
+  experiment_name: "MP280_City_Bus_Delay"
+  registered_model_name: "mp280_bus_delay"
+  tracking_uri: "sqlite:///mlflow.db"
+  model_output_path: "models/model.joblib"
