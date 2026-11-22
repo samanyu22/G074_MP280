@@ -9,12 +9,12 @@ stages:
       size: 57057
     - path: params.yaml
       hash: md5
-      md5: b1a1ff560036b5b94413910c530cbf29
-      size: 912
+      md5: c61c5e1a33be664aded533765b7e0e8e
+      size: 1147
     - path: src/data/clean.py
       hash: md5
-      md5: a95c185140df5adc4b559cc326675099
-      size: 6756
+      md5: c42f2970116151cb1ab95fda48a2a3da
+      size: 7309
     outs:
     - path: data/processed/train_clean.csv
       hash: md5
